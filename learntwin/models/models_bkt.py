@@ -15,10 +15,21 @@ class BKTParams:
 
 class BKTModel:
     """
-    Minimal placeholder BKT-style model so that imports and tests can run.
+    Bayesian Knowledge Tracing (standard two-parameter forward filter).
 
-    This is not a full BKT implementation; it just stores a mastery value
-    per (user, skill) and nudges it up/down based on correctness.
+    Stores the probability of mastery ``p(L)`` per (user, skill). Each
+    observation updates that probability with the guess/slip emission model and
+    then applies the learning transition, exactly as in Corbett & Anderson
+    (1995):
+
+        correct:   p' = p(1-slip) / (p(1-slip) + (1-p)*guess)
+        incorrect: p' = p*slip    / (p*slip    + (1-p)*(1-guess))
+        learn:     p(L)_next = p' + (1 - p') * p_learn
+
+    ``get_mastery`` returns the current p(L); ``p_init`` is the prior for an
+    unseen (user, skill). Deterministic: identical observation streams yield
+    identical estimates (the ``seed`` argument is accepted for API
+    compatibility and does not introduce randomness).
     """
     def __init__(self, params: Optional[BKTParams] = None, seed: int = 0) -> None:
         self.params = params or BKTParams()
@@ -29,8 +40,19 @@ class BKTModel:
         return self._state.get((user_id, skill_id), self.params.p_init)
 
     def update(self, user_id: str, skill_id: str, is_correct: bool) -> float:
-        m = self.get_mastery(user_id, skill_id)
-        delta = self.params.p_learn * (1.0 if is_correct else -0.5)
-        new_m = max(0.0, min(1.0, m + delta))
+        p = self.get_mastery(user_id, skill_id)
+        slip, guess, learn = (
+            self.params.p_slip,
+            self.params.p_guess,
+            self.params.p_learn,
+        )
+        if is_correct:
+            numer = p * (1.0 - slip)
+            posterior = numer / (numer + (1.0 - p) * guess)
+        else:
+            numer = p * slip
+            posterior = numer / (numer + (1.0 - p) * (1.0 - guess))
+        new_m = posterior + (1.0 - posterior) * learn
+        new_m = max(0.0, min(1.0, new_m))
         self._state[(user_id, skill_id)] = new_m
         return new_m

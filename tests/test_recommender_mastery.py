@@ -1,11 +1,11 @@
-﻿import pytest
-from __future__ import annotations
-from dataclasses import dataclass
+﻿from __future__ import annotations
+
 from learntwin import BKT, Recommender
 from learntwin.models_bkt import BKTParams
 
+
 def test_ranks_low_mastery_first_and_tiebreaks():
-    # Make a BKT with known mastery: add=0.2 (default), sub updated to ~0.6 after one correct
+    # Make a BKT with known mastery: add=0.2 (default), sub raised after one correct
     b = BKT(BKTParams())  # prior add=0.2, sub=0.2
     b.update("u1", "sub", True)  # raise mastery for 'sub'
     rec = Recommender(bkt=b, seed=0)
@@ -19,7 +19,7 @@ def test_ranks_low_mastery_first_and_tiebreaks():
     # Items from 'add' should come before 'sub'. Inside 'add', tie-break on item_id ascending.
     assert [x["item_id"] for x in out] == ["i1", "i2", "i3"]
 
-@pytest.mark.xfail(reason="recommender safe-handling for malformed candidates is WIP")
+
 def test_empty_or_malformed_candidates_is_safe():
     rec = Recommender(BKT())
     assert rec.next_items("uX", [], k=5) == []
