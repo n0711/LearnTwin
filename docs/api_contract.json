@@ -1,6 +1,81 @@
-﻿{
-  "get_mastery_request": { "user_id": "string", "skill_id": "string" },
-  "get_mastery_response": { "user_id": "string", "skill_id": "string", "mastery": "float[0,1]" },
-  "next_items_request": { "user_id": "string", "candidates": [ { "item_id": "string", "skill_id": "string" } ], "k": "int" },
-  "next_items_response": { "user_id": "string", "items": [ { "item_id": "string", "skill_id": "string" } ] }
+{
+  "description": "Summary of implemented FastAPI HTTP routes. Not an OpenAPI document; use the running /openapi.json for the generated schema.",
+  "source_files": [
+    "backend/app.py",
+    "backend/schemas.py"
+  ],
+  "auth": {
+    "header": "X-API-Key",
+    "scope": "All ingest, mastery and recommend routes",
+    "missing_header_status": 422,
+    "invalid_key_status": 401
+  },
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "auth": false,
+      "response_example": {
+        "status": "ok"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/ingest/json",
+      "auth": true,
+      "request_example": [
+        {
+          "class_id": "docs-demo",
+          "student_id": 1,
+          "stuck": 0,
+          "got_it": 1,
+          "pause": 0,
+          "example": 0,
+          "confidence": 8
+        }
+      ],
+      "response_example": {
+        "rows_ok": 1,
+        "rows_skipped": 0,
+        "errors": []
+      },
+      "notes": [
+        "Body is an array of MetricsRecord.",
+        "Schema validation errors reject the request with HTTP 422.",
+        "Skipped rows refer to handler insertion failures.",
+        "Missing/null timestamps use current UTC."
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/mastery/{class_id}",
+      "auth": true,
+      "response_fields": [
+        "class_id",
+        "population",
+        "rate_stuck",
+        "rate_got_it",
+        "rate_pause",
+        "rate_example",
+        "avg_confidence",
+        "last_timestamp"
+      ],
+      "notes": [
+        "Population counts metric rows, not distinct students.",
+        "Aggregates include all rows for the class.",
+        "Unknown classes return zero aggregates and null last_timestamp."
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/recommend/{class_id}",
+      "auth": true,
+      "response_example": {
+        "class_id": "docs-demo",
+        "focus": [],
+        "note": "Recommender not yet implemented."
+      },
+      "status": "stub"
+    }
+  ]
 }

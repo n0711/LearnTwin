@@ -1,187 +1,57 @@
-# LearnTwin - EduDataHack Cyprus 2024
+# LearnTwin frontend
 
-**Post-class reflection tool for personalized learning insights**
+React and Vite frontend for the degree/PhD planner and the earlier classroom prototype. See the [root README](../README.md) for branch status and complete setup.
 
-LearnTwin helps teachers understand their students' learning patterns by collecting post-class feedback and generating AI-powered recommendations.
+## Development
 
----
+Use Node.js 22.12+ and npm. From this directory:
 
-## 🚀 Quick Start
-
-### Prerequisites
-
-Make sure you have **Node.js** installed (v16 or higher):
-- Download from: https://nodejs.org/
-
-Check if you have it:
-```bash
-node --version
-npm --version
+```sh
+npm ci
+npm run dev -- --host localhost --port 5173
 ```
 
-### Installation
+Use the URL printed by Vite. The planner does not need Python. Classroom submissions require the [FastAPI backend](BACKEND_INTEGRATION.md).
 
-1. **Clone the repository:**
-```bash
-git clone <your-repo-url>
-cd learntwin
-```
+## Routes
 
-2. **Install dependencies:**
-```bash
-npm install
-```
+- `#/planner`, or an empty hash: degree and PhD planner.
+- `#/classroom`: classroom entry screen.
+- `#/s/1234`: student form for class code 1234.
+- `#/d/1234`: classroom dashboard for that code.
 
-3. **Start the development server:**
-```bash
-npm run dev
-```
+The dashboard reflection view uses mock data and the live view simulates signals. A successful student submission does not update either dashboard.
 
-4. **Open in browser:**
-```
-http://localhost:5173
-```
-(If port 5173 is taken, Vite will use 5174, 5175, etc.)
+## Commands
 
----
-
-## 📱 How to Use
-
-### For Students (Post-Class Reflection)
-
-1. Navigate to: `http://localhost:5173/#/s/1234` (or any session code)
-2. Enter your name
-3. Select session number (1 or 2)
-4. Tap feedback buttons to reflect on the class:
-   - ✋ **Stuck** - Moments you felt confused
-   - ✅ **Got it** - Moments you understood clearly
-   - ⏸️ **Pause** - Times you needed a break
-   - 💡 **Example?** - Times you wanted more examples
-5. Set your overall confidence (1-5)
-6. Submit
-
-### For Teachers (Dashboard)
-
-1. Navigate to: `http://localhost:5173/#/d/1234` (or any session code)
-2. View class overview with all students
-3. Toggle between **Session 1**, **Session 2**, or **Compare** mode
-4. Click any student card to see:
-   - Detailed session data
-   - AI-generated insights
-   - Progress over time
-
----
-
-## 🎯 Demo URLs
-
-- **Home:** http://localhost:5173/
-- **Student View:** http://localhost:5173/#/s/1234
-- **Teacher Dashboard:** http://localhost:5173/#/d/1234
-
-The dashboard includes 6 mock students with pre-filled data for demo purposes.
-
----
-
-## 📂 Project Structure
-
-```
-learntwin/
-├── src/
-│   ├── App.jsx              # Main router
-│   ├── StudentView.jsx      # Student reflection form
-│   ├── DashboardView.jsx    # Teacher dashboard
-│   ├── mockData.js          # Sample student data
-│   └── index.css            # All styling
-├── public/
-├── index.html
-├── package.json
-└── vite.config.js
-```
-
----
-
-## 🛠️ Available Commands
-
-```bash
-# Install dependencies
-npm install
-
-# Start development server (with hot reload)
-npm run dev
-
-# Build for production
+```sh
+npm test
+npm run lint
 npm run build
-
-# Preview production build
 npm run preview
 ```
 
----
+Tests use Node's built-in test runner on `tests/*.test.js`. Lint and build are independent checks. Preview serves the production output locally.
 
-## 🧪 Tech Stack
+## Configuration
 
-- **React** 18.3.1 - UI framework
-- **Vite** 7.2.2 - Build tool
-- **Plain CSS** - No framework dependencies
-- **Hash-based routing** - Simple client-side routing
+`src/api.js` reads `VITE_API_URL` and `VITE_API_KEY`. See `.env.example` for local defaults. Restart the development server after changes; rebuild production assets after changing build-time settings. Browser bundles expose these values.
 
----
+The backend currently allows localhost ports 5173 and 5174. A different port or using 127.0.0.1 as the frontend hostname requires an appropriate backend CORS change.
 
-## 📊 Features
+## Static hosting
 
-✅ Post-class student reflection form
-✅ Teacher dashboard with class overview
-✅ Session comparison (Session 1 vs Session 2)
-✅ AI-generated personalized insights
-✅ Privacy-first design (no PII required)
-✅ Mobile responsive
-✅ Works offline after initial load
+Build this directory and publish `dist/` at the root of an HTTPS origin. Hash routes need no server rewrite. Hosting under a subpath requires Vite base-path configuration and verification. Localhost development or HTTPS also supports the planner's use of `crypto.randomUUID()`.
 
----
+Planner data remains on the user's browser, not the host. A preview deployment and a production deployment have different origins and therefore different records. Export a backup before changing origin and import it on the destination.
 
-## 🐛 Troubleshooting
+Before release, verify narrow-screen layout, keyboard access, reload persistence, export/import confirmation and cancellation, invalid-file handling, and all classroom navigation links.
 
-### Port already in use
-If you see "Port 5173 is in use", Vite will automatically try the next port (5174, 5175, etc.). Check the terminal output for the actual URL.
+## Source guide
 
-### Dependencies not installing
-```bash
-# Clear npm cache
-npm cache clean --force
-
-# Delete node_modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### Browser not updating
-- Hard refresh: `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac)
-- Clear browser cache
-- Restart the dev server
-
----
-
-## 👥 Team
-
-**EduDataHack Cyprus 2024**
-Project: LearnTwin - "Make understanding visible"
-
----
-
-## 📄 License
-
-Open source - MIT License
-
----
-
-## 🤝 Contributing
-
-1. Create a new branch: `git checkout -b feature/your-feature`
-2. Make your changes
-3. Commit: `git commit -m "Add your feature"`
-4. Push: `git push origin feature/your-feature`
-5. Open a Pull Request
-
----
-
-**Need help?** Check the terminal output for error messages or contact the team.
+- `src/App.jsx`: hash routes.
+- `src/DegreePlanner.jsx`: planner UI and persistence.
+- `src/planner.js`: calculations and validation.
+- `src/StudentView.jsx`: classroom submissions.
+- `src/DashboardView.jsx`, `src/LiveDashboard.jsx`, `src/mockData.js`: demonstration analytics.
+- `src/api.js`: classroom HTTP client.
