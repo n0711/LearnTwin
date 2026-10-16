@@ -1,11 +1,10 @@
-﻿import pytest
 from __future__ import annotations
+import pytest
 from dataclasses import dataclass
 from learntwin import BKT
 from learntwin.models_bkt import BKTParams
 import math
 
-@pytest.mark.xfail(reason="BKT update_defaults math not final yet")
 def test_correct_update_defaults_exact():
     # Defaults: p_init=0.2, T=0.15, S=0.1, G=0.2
     bkt = BKT(BKTParams())
@@ -15,7 +14,6 @@ def test_correct_update_defaults_exact():
     after = bkt.update("u1", "add", True)
     assert math.isclose(after, 0.6, abs_tol=1e-9)
 
-@pytest.mark.xfail(reason="BKT update_defaults math not final yet")
 def test_incorrect_update_defaults_exact():
     bkt = BKT(BKTParams())
     # incorrect from 0.2:
@@ -28,3 +26,4 @@ def test_correct_beats_incorrect_from_same_prior():
     a = BKT(BKTParams()).update("u3", "mul", True)
     b = BKT(BKTParams()).update("u3", "mul", False)
     assert a > b
+

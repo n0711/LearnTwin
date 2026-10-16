@@ -9,7 +9,6 @@ This list separates source-confirmed behavior from historical test reports. It i
 - The initial course list and 60-ECTS baseline are seeded planning defaults, not university-verified records.
 - Application deadlines and eligibility/funding checkboxes are entered by the user.
 - Browser interaction, mobile layout and accessibility remain release checks for PR #5.
-- The weekly text export labels a numeric zero-hour estimate as "not estimated" because it uses a truthiness fallback.
 - There is no multi-tab conflict handling; avoid editing the same plan in multiple tabs simultaneously.
 
 ## Classroom
@@ -25,15 +24,20 @@ This list separates source-confirmed behavior from historical test reports. It i
 - Timestamps are stored as strings; class IDs are trimmed without a second nonempty check.
 - Aggregate population counts metric rows, not distinct students, and includes all records for a class.
 
-## Python library: historical test report
+## Python library
 
-The previous known-issues document reported a failure in
-`tests/test_determinism.py::test_recommender_deterministic_sort`,
-involving recommender wiring and defaults (`bkt`, `catalog`).
-Reproduce it with `python -m pytest` in the current checkout before treating it as resolved or asserting the full suite passes.
+The placeholder additive model has been replaced by a Bayesian evidence update
+followed by the learning transition. The public recommender now ranks lower
+mastery first with deterministic skill/item tie-breaking. Test collection order
+is repaired and the former expected-failure cases are active checks.
+
+The current local validation run passes all 14 Python tests. The learning model
+has not been validated against real student outcomes, and the HTTP recommendation
+endpoint remains separate and unimplemented.
 
 ## Data demo
 
 `scripts/demo_on_sample_data.py` expects a classroom-summary CSV that is not supplied. The existing research CSVs use another schema. See [data formats](docs/data_schemas.md).
 
 For proposed fixes and acceptance criteria, see the [roadmap](docs/ROADMAP.md).
+

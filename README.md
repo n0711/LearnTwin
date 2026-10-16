@@ -80,6 +80,14 @@ Restart Vite after editing environment variables. `devkey` is for local developm
 - [Contributing](CONTRIBUTING.md)
 - [Roadmap](docs/ROADMAP.md)
 
+## Prepared desktop bundle
+
+The Fun and Games bundle includes a prebuilt planner. With Node.js installed,
+run its `Start-LearnTwin.cmd`; no npm dependency installation is required to use
+that prepared build. In a source checkout, run `npm ci` and `npm run build` in
+`frontend/`, then `node serve-built.mjs`. The server binds to loopback on port
+5173 and serves only `dist/`.
+
 ## Checks and production build
 
 From `frontend/`:
@@ -110,3 +118,4 @@ Classroom feedback is stored separately in SQLite. The current shared-key protot
 ## License
 
 [MIT](LICENSE).
+
