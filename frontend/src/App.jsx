@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import StudentView from './StudentView';
 import DashboardView from './DashboardView';
 import Logo from './Logo';
+import DegreePlanner from './DegreePlanner';
 
 function App() {
-  const [view, setView] = useState('home');
+  const [view, setView] = useState('planner');
   const [sessionCode, setSessionCode] = useState('');
 
   const updateRoute = () => {
@@ -15,8 +16,11 @@ function App() {
     } else if (hash.startsWith('#/d/')) {
       setView('dashboard');
       setSessionCode(hash.replace('#/d/', ''));
-    } else {
+    } else if (hash === '#/classroom') {
       setView('home');
+      setSessionCode('');
+    } else {
+      setView('planner');
       setSessionCode('');
     }
   };
@@ -45,6 +49,8 @@ function App() {
     }
   };
 
+  if (view === 'planner') return <DegreePlanner />;
+
   if (view === 'home') {
     return (
       <div className="home-container">
@@ -54,6 +60,7 @@ function App() {
             <h1 className="home-title" style={{ margin: 0 }}>LearnTwin</h1>
           </div>
           <p className="home-subtitle">Make understanding visible</p>
+          <a href="#/planner">Open degree & PhD planner →</a>
 
           <div>
             <div className="home-section">

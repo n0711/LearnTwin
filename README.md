@@ -1,4 +1,9 @@
-﻿# LearnTwin
+# LearnTwin
+
+## Degree & PhD planner
+
+The default web workspace now tracks courses, assignment deadlines, thesis milestones and PhD applications. It works in your browser without the Python backend and supports JSON backup/restore. See [setup, data handling and limitations](docs/DEGREE_PHD_PLANNER.md). The existing classroom features remain available from the sidebar.
+
 
 LearnTwin is an open-source “learning twin” for students and educators.
 
