@@ -8,7 +8,7 @@ function LiveDashboard({ sessionCode }) {
     pause: 0,
     example: 0,
   });
-  const [avgConfidence, setAvgConfidence] = useState(3.5);
+  const [avgConfidence] = useState(3.5);
   const [showTip, setShowTip] = useState(null);
   const [sessionData, setSessionData] = useState([]);
 
@@ -177,3 +177,4 @@ function LiveDashboard({ sessionCode }) {
 }
 
 export default LiveDashboard;
+

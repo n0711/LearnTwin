@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Dict, Any, Iterable, Tuple
-from .models_bkt import BKT
+from .models_bkt import BKTModel as BKT
 
 def _key_det(item: Dict[str, Any]) -> Tuple[str, str]:
     # Deterministic tie-break: (skill_id, item_id) as strings
@@ -27,6 +27,8 @@ class Recommender:
         scored: List[Tuple[float, Tuple[str, str], Dict[str, Any]]] = []
 
         for c in candidates:
+            if not isinstance(c, dict):
+                continue
             skill = str(c.get("skill_id", ""))
             if not skill or "item_id" not in c:
                 # skip malformed candidates quietly
@@ -40,3 +42,4 @@ class Recommender:
         # Sort: score descending, then deterministic tie-break ascending
         scored.sort(key=lambda t: (-t[0], t[1]))
         return [c for _, __, c in scored[:max(0, int(k))]]
+

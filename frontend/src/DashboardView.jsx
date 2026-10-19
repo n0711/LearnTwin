@@ -59,12 +59,7 @@ function DashboardView({ sessionCode }) {
 
     const chartColors = ['#ef4444', '#22c55e', '#eab308', '#3b82f6'];
 
-    const pieData = [
-      { value: analytics.signals.stuck, color: '#ef4444' },
-      { value: analytics.signals.gotIt, color: '#22c55e' },
-      { value: analytics.signals.pause, color: '#eab308' },
-      { value: analytics.signals.example, color: '#3b82f6' }
-    ];
+
 
     return (
       <div className="dashboard-container">
@@ -462,3 +457,4 @@ function DashboardView({ sessionCode }) {
 }
 
 export default DashboardView;
+
