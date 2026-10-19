@@ -7,7 +7,7 @@ These are proposed next steps, not shipped features or delivery promises. See [k
 - Complete mobile and keyboard interaction checks.
 - Exercise export, replacement/cancellation, malformed imports, blocked storage and recovery.
 - Run planner tests, lint and production build; record failures explicitly.
-- Review and merge PR #5 once its release checks are satisfied.
+- PR #5 merged on 19 October 2026. Verify the current hosted build separately and collect feedback on the first-use workflow.
 - Publish the static frontend and verify the actual production origin and backup transfer.
 
 Acceptance: a user can record a course, assignment and application, reload, export a backup and restore it on another origin without losing the expected records.

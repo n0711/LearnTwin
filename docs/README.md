@@ -21,4 +21,6 @@ Start with the [project README](../README.md) for scope, branch status and setup
 
 `INTEGRATION_LOG.md` and `TEAM_STATUS.txt` are historical coordination notes. Use implementation files and the guides above to determine current behavior. FastAPI's running `/openapi.json` is the authoritative generated HTTP schema.
 
-Documentation describes the planner branch introduced in PR #5. It does not mean that branch has been merged or deployed.
+The planner introduced in PR #5 is on `main` as of 19 October 2026. Deployment status must be checked separately.
+
+- [Product scope and optional setup assistance](PRODUCT_SCOPE.md)

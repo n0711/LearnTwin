@@ -4,7 +4,7 @@ Start with the [README](README.md) and [architecture](docs/ARCHITECTURE.md). Kee
 
 ## Choose the right base
 
-The planner currently lives on `feature/degree-phd-planner` in PR #5. Base planner work on that branch until it merges. For other work, use the repository's default branch and state which behavior your change targets. Preserve uncommitted local work before switching branches.
+The planner was merged into `main` in PR #5 on 19 October 2026. Start new work from current `main` and state which component your change targets. Preserve uncommitted local work before switching branches.
 
 ## Development workflow
 

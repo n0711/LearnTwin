@@ -4,7 +4,18 @@ LearnTwin is an open-source workspace for degree progress, study planning and Ph
 
 Track verified course credits, prioritise assignments, prepare thesis milestones and organise application requirements in one browser-based workspace. The project began as a DigiEduHack 2025 prototype and also includes a Python learning-analytics library.
 
-> **Branch status:** The degree and PhD planner is introduced in [PR #5](https://github.com/n0711/LearnTwin/pull/5), on `feature/degree-phd-planner`. Until that PR is merged, `main` contains the earlier classroom workspace. These instructions describe the planner branch.
+> **Current branch:** The degree and PhD planner is available on `main`. [PR #5](https://github.com/n0711/LearnTwin/pull/5) was merged on 19 October 2026. A merge does not by itself verify a hosted deployment.
+
+## First successful session
+
+1. Start the planner using the commands below.
+2. Review the sample course baseline before entering your own information.
+3. Add one assignment and one thesis milestone, then inspect the weekly plan.
+4. Export a JSON backup. Keep it private and test import with a separate browser profile.
+
+The software is free under the MIT license. There is no required subscription,
+paid account or admission guarantee. See [the product scope](docs/PRODUCT_SCOPE.md)
+for the boundary between the planner and any optional setup assistance.
 
 ## What works today
 
@@ -24,7 +35,7 @@ There is no AI chat, PDF/video ingestion, automatic degree audit, university int
 Prerequisites: Git and Node.js 22.12+ with npm. The Python backend is unnecessary for the planner.
 
 ```sh
-git clone --branch feature/degree-phd-planner https://github.com/n0711/LearnTwin.git
+git clone https://github.com/n0711/LearnTwin.git
 cd LearnTwin/frontend
 npm ci
 npm run dev -- --host localhost --port 5173
@@ -32,7 +43,7 @@ npm run dev -- --host localhost --port 5173
 
 Open the URL printed by Vite, normally http://localhost:5173. Review the seeded courses and baseline before adding your own records. Export a backup regularly.
 
-For an existing checkout, switch branches only after saving any local work. After PR #5 merges, use `main` instead.
+For an existing checkout, preserve any local changes before switching to `main` and pulling updates.
 
 ## Run the optional classroom backend
 
