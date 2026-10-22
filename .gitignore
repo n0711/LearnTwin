@@ -1,3 +1,13 @@
 ﻿__pycache__/
 *.pyc
 .pytest_cache/
+
+# Local virtual environments, logs and packaging metadata
+.venv/
+.logs/
+*.egg-info/
+
+# SQLite files the classroom backend and tests create at runtime
+*.db
+*.db-shm
+*.db-wal
