@@ -11,3 +11,8 @@
 *.db
 *.db-shm
 *.db-wal
+
+# Private local academic records and Rust build output
+academic_records.sqlite3
+academic_records.sqlite3-*
+backend/academic_store/target/
