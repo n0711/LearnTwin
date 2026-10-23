@@ -47,8 +47,9 @@ def parse_transcript(data: bytes) -> dict:
     for pos in range(1, len(chunks), 2):
         term, block = chunks[pos].strip(), chunks[pos + 1]
         rows = list(COURSE.finditer(block))
-        if not rows:
-            raise ValueError(f"No course rows recognized for {term}. Nothing imported.")
+        visible_codes = re.findall(r"[A-Z]{4}\\d{3}", block)
+        if not rows or sorted(visible_codes) != sorted(row['code'] for row in rows):
+            raise ValueError(f"Some course rows in {term} could not be recognized. Nothing imported.")
         for row in rows:
             attempted, earned = int(row['attempted']), int(row['earned'])
             if attempted < 1 or earned > attempted:
