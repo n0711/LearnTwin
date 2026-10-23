@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { initial, validate, checks } from '../src/planner.js';
 import {
   defaultPhd, phdFor, validPhd, applicationReadiness,
-  confirmedFunding, selectPhdApplications,
+  confirmedFunding, selectPhdApplications, nextPhdActions,
 } from '../src/phd.js';
 
 function app(id, deadline = '', overrides = {}) {
@@ -71,4 +71,12 @@ test('comparison sorts deterministically and respects all filters', () => {
   assert.deepEqual(selectPhdApplications([third,second,first], { sort: 'Research fit' }).map(a => a.id), ['high','low','unknown']);
   assert.deepEqual(selectPhdApplications([third,second,first], { funding: 'Fully funded', eligibility: 'Needs review', status: 'Preparing' }).map(a => a.id), ['high']);
   assert.equal(selectPhdApplications([first], { status: 'Interview' }).length, 0);
+});
+
+test('next PhD actions appear in target-date order and ignore closed records', () => {
+  const a = app('a', '2027-03-01', { phd: { ...defaultPhd(), nextAction: 'Request reference', actionDue: '2026-11-04' } });
+  const b = app('b', '2027-03-02', { phd: { ...defaultPhd(), nextAction: 'Check eligibility', actionDue: '2026-10-29' } });
+  const c = app('c', '2027-03-03', { phd: { ...defaultPhd(), nextAction: 'Send email', actionDue: '2026-10-24' }, status: 'Closed' });
+  const d = app('d', '', { phd: { ...defaultPhd(), nextAction: ' ' } });
+  assert.deepEqual(nextPhdActions([a,c,d,b]).map(x => x.id), ['b','a']);
 });
