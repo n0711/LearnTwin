@@ -22,7 +22,7 @@ for the boundary between the planner and any optional setup assistance.
 - **Degree planning:** editable remaining-credit baseline, course status and verified ECTS.
 - **Study planning:** assignments, due dates, effort estimates and up to five prioritised next actions.
 - **Thesis preparation:** research question, confirmed supervisor, next milestone and notes.
-- **PhD preparation:** programme links, deadlines, application status and document checklists.
+- **PhD preparation:** a sortable, filterable programme shortlist with research-fit and eligibility notes, funding source verification, checklist progress and next actions. User-entered evidence does not establish admission eligibility or funding guarantees.
 - **Local records:** browser storage, validated JSON backup/import and a text weekly-plan export.
 - **Classroom API:** JSON feedback ingestion and class-level aggregates stored in SQLite.
 
