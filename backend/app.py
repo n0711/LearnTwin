@@ -138,3 +138,8 @@ def recommend_for_class(
 @app.get("/health", tags=["ops"])
 def health():
     return {"status": "ok"}
+
+
+# Optional local Frederick transcript/GPA APIs (FastAPI + Rust/SQLite).
+from academic_routes import make_academic_router
+app.include_router(make_academic_router(require_api_key))
