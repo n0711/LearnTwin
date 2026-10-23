@@ -61,7 +61,7 @@ For each programme, record:
 - **Funding:** advertised funding category, source verification state, official source URL, date checked, stipend/salary, fee coverage and duration. Amounts are free-text so the app does not convert currencies or infer living costs.
 - **Action plan:** next concrete task, target date, the existing six-item preparation checklist, relevant contacts and document links.
 
-Use the sortable, filterable **Compare programmes** table to shortlist by application deadline, priority, fit or checklist completion, and filter by funding, eligibility and application status. Undated programmes sort after dated ones. An unscored research fit sorts below scored programmes. The completion number counts the original six checklist items **only**; it never represents probability of admission.
+Use the sortable, filterable **Compare programmes** table to shortlist by application deadline, priority, fit or checklist completion, and filter by funding, eligibility and application status. PhD next actions with a description and target date also appear on **Overview** (up to five), and in the text weekly-plan export; closed applications and empty actions are excluded. Undated programmes sort after dated ones. An unscored research fit sorts below scored programmes. The completion number counts the original six checklist items **only**; it never represents probability of admission.
 
 The **Fully funded with recorded verification** count requires all three: the user selected Fully funded, marked the evidence Verified and entered a valid HTTP(S) funding-source URL. This is a record of the user's review, not automated verification or a guarantee of sufficient funding. Recheck deadlines, eligibility and pay directly with the institution before applying.
 
