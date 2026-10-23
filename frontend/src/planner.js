@@ -1,5 +1,6 @@
+import { REQUIRED_CHECKS, validPhd } from './phd.js';
 export const KEY='learntwin.planner.v1';
-export const checks=['Eligibility verified','Funding verified','CV ready','Statement ready','Transcript ready','References ready'];
+export const checks=REQUIRED_CHECKS;
 export const courseStates=['Planned','In progress','Passed'];
 export const taskStates=['To do','In progress','Done'];
 export const appStates=['Researching','Preparing','Submitted','Interview','Offer','Closed'];
@@ -23,7 +24,7 @@ export function validate(s){
  for(const k of ['courses','tasks','apps'])if(!Array.isArray(s[k])||s[k].length>2000||!s[k].every(r=>r&&str(r.id,100)&&r.id.length)||new Set(s[k].map(r=>r.id)).size!==s[k].length)fail();
  if(!s.courses.every(c=>str(c.title,200)&&amount(c.credits)&&courseStates.includes(c.status)&&str(c.notes)))fail();
  if(!s.tasks.every(t=>str(t.title,200)&&s.courses.some(c=>c.id===t.course)&&date(t.due)&&amount(t.hours)&&taskStates.includes(t.status)&&str(t.notes)))fail();
- if(!s.apps.every(a=>str(a.university,200)&&str(a.program,200)&&str(a.url,2000)&&date(a.deadline)&&appStates.includes(a.status)&&str(a.notes)&&a.checks&&checks.every(k=>typeof a.checks[k]==='boolean')))fail();
+ if(!s.apps.every(a=>str(a.university,200)&&str(a.program,200)&&str(a.url,2000)&&date(a.deadline)&&appStates.includes(a.status)&&str(a.notes)&&a.checks&&checks.every(k=>typeof a.checks[k]==='boolean')&&validPhd(a.phd)))fail();
  if(!s.thesis||!['topic','supervisor','milestone','notes'].every(k=>str(s.thesis[k])))fail();
  return s;
 }

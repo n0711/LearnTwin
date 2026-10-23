@@ -48,3 +48,37 @@ The separately scheduled ChatGPT weekly plan cannot read browser-local records. 
 ## Verification
 
 `npm test` covers scheduling order, completed-task exclusion, missing estimates, the five-action limit, credits, calendar-day arithmetic, backup validation/round-trip and safe external URL protocols. `npm run build` checks the production bundle. Browser interaction/visual verification is still required before a production release.
+
+
+## PhD application management workspace
+
+On **PhD applications**, add an institution and the official vacancy or programme page. A blank deadline means unverified or unknown, not an automatically inferred rolling deadline. Existing programme records, statuses, checkboxes, notes and links continue to work.
+
+For each programme, record:
+
+- **Research match:** country, research topic, potential group/supervisor, a *subjective* 1–5 fit rating (or Unrated) and your own priority.
+- **Eligibility:** a user-selected review state, a requirements source URL, concrete entry requirements and evidence or gaps in notes. “Self-assessed eligible” is not institutional confirmation.
+- **Funding:** advertised funding category, source verification state, official source URL, date checked, stipend/salary, fee coverage and duration. Amounts are free-text so the app does not convert currencies or infer living costs.
+- **Action plan:** next concrete task, target date, the existing six-item preparation checklist, relevant contacts and document links.
+
+Use the sortable, filterable **Compare programmes** table to shortlist by application deadline, priority, fit or checklist completion, and filter by funding, eligibility and application status. PhD next actions with a description and target date also appear on **Overview** (up to five), and in the text weekly-plan export; closed applications and empty actions are excluded. Undated programmes sort after dated ones. An unscored research fit sorts below scored programmes. The completion number counts the original six checklist items **only**; it never represents probability of admission.
+
+The **Fully funded with recorded verification** count requires all three: the user selected Fully funded, marked the evidence Verified and entered a valid HTTP(S) funding-source URL. This is a record of the user's review, not automated verification or a guarantee of sufficient funding. Recheck deadlines, eligibility and pay directly with the institution before applying.
+
+### Backward compatibility
+
+Existing planner backups remain **version 1**. PhD metadata is an optional `phd` object on each application, and an old application with no `phd` value gets blank/Unknown defaults **only when displayed**. The saved record is not rewritten merely to display it. Editing a new field stores that object's data; original fields are preserved. Exports round-trip both legacy and enriched applications. Import rejects malformed enums, dates, unsupported URLs and invalid metadata without replacing the existing browser records.
+
+The academic transcript importer is a separate local Rust/SQLite + FastAPI service. PhD application records still live in browser storage; they do not automatically sync to the academic database. Do not put personal transcripts, addresses, identification documents, referee details or private application notes into the public repository.
+
+### Verification
+
+From `frontend/`:
+
+```sh
+npm test
+npm run lint
+npm run build
+```
+
+`tests/phd.test.js` covers legacy backups, metadata validation, source-confirmed funding, checklist semantics, sorting/filtering and JSON round trips. Browser-based keyboard/mobile testing and checking the user's own official programme sources are still required.
