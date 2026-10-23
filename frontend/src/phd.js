@@ -104,3 +104,14 @@ export function selectPhdApplications(apps, { sort = 'Deadline', status = 'All',
       a.university.localeCompare(b.university) || a.id.localeCompare(b.id);
   });
 }
+
+/** Work queue for PhD preparation; an empty action or closed application is excluded. */
+export function nextPhdActions(apps) {
+  return apps
+    .filter(app => app.status !== 'Closed' && phdFor(app).nextAction.trim())
+    .sort((a, b) =>
+      (phdFor(a).actionDue || '9999-12-31').localeCompare(phdFor(b).actionDue || '9999-12-31') ||
+      (a.deadline || '9999-12-31').localeCompare(b.deadline || '9999-12-31') ||
+      a.university.localeCompare(b.university) || a.id.localeCompare(b.id))
+    .slice(0, 5);
+}
