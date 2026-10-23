@@ -28,7 +28,7 @@ for the boundary between the planner and any optional setup assistance.
 
 The classroom reflection dashboard uses mock data; its live dashboard simulates signals. Student submissions reach the API, but the dashboards do not yet display those stored submissions. The HTTP recommendation endpoint is a stub.
 
-There is no AI chat, PDF/video ingestion, automatic degree audit, university integration, cloud sync or application submission. Planner records and checklist completion are user-entered evidence, not admission or funding predictions.
+There is no AI chat, PDF/video ingestion in the browser-only planner, automatic official degree audit, university integration, cloud sync or application submission. An optional local Frederick Academic Record PDF import and GPA history view is available when you run the FastAPI + Rust/SQLite service; see [Frederick academic import](docs/ACADEMIC_IMPORT.md). Planner records and checklist completion are user-entered evidence, not admission or funding predictions.
 
 ## Start the planner
 
@@ -83,6 +83,7 @@ Restart Vite after editing environment variables. `devkey` is for local developm
 
 - [Documentation index](docs/README.md)
 - [Degree and PhD planner guide](docs/DEGREE_PHD_PLANNER.md)
+- [Frederick PDF importer and Rust/SQLite setup](docs/ACADEMIC_IMPORT.md)
 - [Architecture and implementation boundaries](docs/ARCHITECTURE.md)
 - [Classroom API and integration](frontend/BACKEND_INTEGRATION.md)
 - [Data formats](docs/data_schemas.md)
