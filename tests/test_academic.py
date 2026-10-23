@@ -1,7 +1,7 @@
 """Synthetic examples only. Never commit a student's transcript to this repository."""
 from unittest.mock import patch
 import pytest
-from academic import parse_transcript
+from backend.academic import parse_transcript
 
 
 TEXT = '''ACADEMIC RECORD
@@ -25,7 +25,7 @@ def synthetic_pdf(text=TEXT):
             return text
     class Reader:
         pages = [Page()]
-    with patch('academic.PdfReader', return_value=Reader()):
+    with patch('backend.academic.PdfReader', return_value=Reader()):
         return parse_transcript(b'%PDF-1.7 synthetic')
 
 
