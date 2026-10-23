@@ -137,3 +137,29 @@ fn run() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 fn main() { if let Err(err)=run() {eprintln!("academic_store: {err}");process::exit(1);} }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn academic_snapshot_round_trip() {
+        let mut db = Connection::open_in_memory().unwrap();
+        setup(&db).unwrap();
+        let doc = json!({
+          "id":"sample-pdf-hash", "issued":"2026-10-23", "transferred_ects":40,
+          "earned_ects":46, "cumulative_gpa":8.1,
+          "courses":[{"term":"Fall 2026","code":"ACSC401","title":"Algorithms",
+              "attempted":6,"earned":6,"grade":8.1,"status":"Passed"}],
+          "history":[{"term":"Fall 2026","semester_gpa":8.1,
+              "cumulative_gpa":8.1,"cumulative_ects":46}]
+        });
+        import(&mut db,&doc).unwrap();
+        import(&mut db,&doc).unwrap(); // Re-import is idempotent.
+        sync_current(&mut db,&json!([{"code":"ACSC489","title":"Project Preparation","ects":6}])).unwrap();
+        let result = summary(&db).unwrap();
+        assert_eq!(result["transcript"]["earned_ects"], 46);
+        assert_eq!(result["courses"].as_array().unwrap().len(), 1);
+        assert_eq!(result["history"].as_array().unwrap().len(), 1);
+        assert_eq!(result["current_ects"], 6);
+    }
+}
