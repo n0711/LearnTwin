@@ -131,3 +131,9 @@ Classroom feedback is stored separately in SQLite. The current shared-key protot
 
 [MIT](LICENSE).
 
+
+## Support this project
+
+If this project is useful to you, you can support its development with a one-off contribution via Revolut:
+
+**[revolut.me/nadiotis](https://revolut.me/nadiotis)**
