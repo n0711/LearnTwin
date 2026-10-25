@@ -1,5 +1,11 @@
 # Architecture
 
+Recommendation selection uses a stable heap-based top-k over candidate streams.
+For k < n, ranking costs O(n log(k + 1)) time with O(k + s) auxiliary space,
+where s is the number of distinct valid skills cached during the call. Full
+results still require O(n log n) work. Mastery scoring, malformed-row filtering,
+and input order for equal ranking keys are covered by equivalence tests.
+
 LearnTwin contains three related but separate components. They do not currently share a unified user identity or database.
 
 ## Browser planner
