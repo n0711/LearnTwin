@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from heapq import nsmallest
 from typing import List, Dict, Any, Iterable, Tuple
 from .models_bkt import BKTModel as BKT
 
@@ -24,22 +24,22 @@ class Recommender:
     ) -> List[Dict[str, Any]]:
         # Cache mastery per skill to avoid repeated lookups
         mastery_cache: Dict[str, float] = {}
-        scored: List[Tuple[float, Tuple[str, str], Dict[str, Any]]] = []
+        def scored_candidates():
+            for c in candidates:
+                if not isinstance(c, dict):
+                    continue
+                skill = str(c.get("skill_id", ""))
+                if not skill or "item_id" not in c:
+                    continue
+                if skill not in mastery_cache:
+                    mastery_cache[skill] = self.bkt.get_mastery(user_id, skill)
+                score = 1.0 - mastery_cache[skill]
+                yield score, _key_det(c), c
 
-        for c in candidates:
-            if not isinstance(c, dict):
-                continue
-            skill = str(c.get("skill_id", ""))
-            if not skill or "item_id" not in c:
-                # skip malformed candidates quietly
-                continue
-            if skill not in mastery_cache:
-                mastery_cache[skill] = self.bkt.get_mastery(user_id, skill)
-            mastery = mastery_cache[skill]
-            score = 1.0 - mastery  # lower mastery → higher score
-            scored.append((score, _key_det(c), c))
-
-        # Sort: score descending, then deterministic tie-break ascending
-        scored.sort(key=lambda t: (-t[0], t[1]))
-        return [c for _, __, c in scored[:max(0, int(k))]]
+        # Stable top-k: O(n log(k + 1)) time and O(k + skills) space for k < n.
+        # nsmallest keeps input order for equal keys without comparing the dicts.
+        selected = nsmallest(
+            max(0, int(k)), scored_candidates(), key=lambda t: (-t[0], t[1])
+        )
+        return [c for _, __, c in selected]
 
