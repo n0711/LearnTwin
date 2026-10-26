@@ -5,6 +5,7 @@ Start with the [project README](../README.md) for scope, branch status and setup
 ## Users
 
 - [Degree and PhD planner](DEGREE_PHD_PLANNER.md): first use, prioritisation, credits, backup and recovery.
+- [ROS3 + VERA research evidence](ROS3_VERA_RESEARCH.md): optional and independently sourced PhD milestone; no planner-data migration.
 - [Known issues](../KNOWN_ISSUES.md): current limitations and release checks.
 
 ## Developers
