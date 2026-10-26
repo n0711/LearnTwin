@@ -136,3 +136,12 @@ chosen.
 This note does not justify changes to eligibility/funding verification,
 application status, checklist completion or research-fit scores. Do not create
 a fake programme entry or replace a whole planner backup to add the note.
+
+
+### Optional multi-modal evidence follow-up
+
+For proposed future work joining ROS3 receiver observations, VERA-MOT
+tracker-output evidence and externally declared VLM annotations, see
+[ROS3 and VERA research planning](ROS3_VERA_RESEARCH.md). This is an optional
+research note, not automatic ML in the LearnTwin browser planner. No records
+are created or modified by this documentation.
