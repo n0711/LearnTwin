@@ -82,3 +82,57 @@ npm run build
 ```
 
 `tests/phd.test.js` covers legacy backups, metadata validation, source-confirmed funding, checklist semantics, sorting/filtering and JSON round trips. Browser-based keyboard/mobile testing and checking the user's own official programme sources are still required.
+
+## Optional ROS3-Limassol research milestone
+
+[Issue #12](https://github.com/n0711/LearnTwin/issues/12) requests optional
+research evidence for PhD preparation. If useful for a relevant application,
+append the note below to **References, document links, contact notes and
+decisions** without replacing existing text. This documentation-only update
+does not seed applications, migrate storage or read/change browser records.
+
+### Suggested note
+
+ROS3-Limassol research-software milestone - 25 October 2026.
+
+Original idea: Christos Paparistodemou. Project lead/manuscript author: Charalampos
+Nadiotis.
+
+PR #12 merged a read-only, bounded offline JSON evidence exporter for
+receiver-observation recordings. It validates the full JSONL input, fingerprints its
+exact bytes with SHA-256, counts accepted/rejected observations and silence ticks, and
+retains the last 256 observed state changes with exact aggregate counters.
+
+At tested commit 005f0fcc40b2efeb397704589af871ea9bc38759, GitHub Actions run
+40226507393 passed all five jobs: Linux/Python 3.10 and 3.12, Windows/Python 3.12, ROS 2
+Humble and ROS 2 Jazzy. Separate run 40226507353 passed Rust formatting, Clippy, tests,
+build and Python/Rust parity checks.
+
+Evidence status: automated software/ROS integration checks using synthetic observations.
+Reports describe receiver-arrival observations; silence ticks are not proven packet
+losses, and observed transitions are limited to recorded ticks. SHA-256 identifies input
+bytes, not authenticity or provenance.
+
+Physical hardware/field validation remains pending. These results do not establish
+packet delivery ratio, one-way delay, network jitter, sensor capture freshness, field
+reliability or vehicle safety.
+
+Evidence: [merged PR #12](https://github.com/n0711/ROS3-Limassol/pull/12),
+[five-job CI run](https://github.com/n0711/ROS3-Limassol/actions/runs/40226507393)
+and [Rust run](https://github.com/n0711/ROS3-Limassol/actions/runs/40226507353).
+The [evidence guide](https://github.com/n0711/ROS3-Limassol/blob/2f071da0ec5891ef6dc42c02fa5fab3b9cdbbefb/robotics/ros3_limassol/docs/EVIDENCE.md)
+defines report semantics. These passing runs apply to their tested commit,
+not every later commit on main.
+
+### Suggested next concrete action
+
+Prepare a documented Humble/Jazzy hardware or field study with independent
+outage/recovery ground truth, raw JSONL recordings, evidence JSON, software/ROS
+versions, clock assumptions, timeout/tick settings and repeat counts. Keep
+execution pending until actual results are recorded. This proposed action is
+not a scheduled or completed experiment; leave its target date unset unless
+chosen.
+
+This note does not justify changes to eligibility/funding verification,
+application status, checklist completion or research-fit scores. Do not create
+a fake programme entry or replace a whole planner backup to add the note.
