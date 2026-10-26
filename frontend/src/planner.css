@@ -19,4 +19,6 @@
 .phd-details summary:focus-visible{outline:3px solid #d29831;outline-offset:3px}
 .phd-details>p{font-size:12px}
 .phd-details .checklist{margin:10px 0 18px}
+.research-reference .phd-details{border-top:0;padding:0}
+.research-reference code{overflow-wrap:anywhere}
 @media(max-width:700px){.phd-comparison{font-size:12px}.phd-details{padding:12px 0}}

@@ -91,6 +91,11 @@ append the note below to **References, document links, contact notes and
 decisions** without replacing existing text. This documentation-only update
 does not seed applications, migrate storage or read/change browser records.
 
+The **PhD applications** page also includes a collapsed **Optional research
+reference: ROS3-Limassol** card with the milestone, evidence links and limitations.
+Opening the card only displays public reference material; it does not add an
+application, edit notes or mark preparation items complete.
+
 ### Suggested note
 
 ROS3-Limassol research-software milestone - 25 October 2026.

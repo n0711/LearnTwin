@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {KEY,checks,courseStates,taskStates,appStates,initial,plan,progress,safeUrl,validate} from './planner';
 import TranscriptPanel from './TranscriptPanel';
+import ResearchMilestone from './ResearchMilestone';
 import { defaultPhd, phdFor, fundingOptions, verificationOptions, eligibilityOptions, priorityOptions, fitOptions, applicationReadiness, confirmedFunding, selectPhdApplications, nextPhdActions } from './phd.js';
 import './planner.css';
 const tabs=['Overview','Degree','Assignments','Thesis','PhD applications'];
@@ -37,6 +38,7 @@ export default function DegreePlanner(){
     <article><span>Fully funded with recorded verification</span><strong>{s.apps.filter(confirmedFunding).length}</strong><p>Requires a source link and explicit verification</p></article>
     <article><span>Applications with next action</span><strong>{s.apps.filter(a=>phdFor(a).nextAction.trim()).length}</strong><p>Keep progress actionable</p></article>
   </section>
+  <ResearchMilestone/>
   <section className="panel">
     <h2>Add a PhD programme or funded research position</h2>
     <p>Record the official source first. Deadlines, funding, eligibility and research fit remain unverified until you check them. Research-fit ratings are subjective, not admission probabilities.</p>
